@@ -21,6 +21,7 @@ class TaskListFragment : Fragment() {
     ): View? {
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
         adapter.currentList = taskList
+        recyclerView?.adapter = adapter
         val rootView = inflater.inflate(R.layout.fragment_blank, container, false)
         return super.onCreateView(inflater, container, savedInstanceState)
     }
