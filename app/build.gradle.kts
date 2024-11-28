@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.todoadamjulie"
+    namespace = "com.adamjulie.todo"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.todoadamjulie"
+        applicationId = "com.adamjulie.todo"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -45,7 +45,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    implementation("androidx.fragment:fragment-ktx:1.6.2")
-    implementation("androidx.activity:activity-ktx:1.8.1")
 }
