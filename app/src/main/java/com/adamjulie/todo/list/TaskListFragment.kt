@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
+import com.adamjulie.todo.databinding.ActivityMainBinding
+import com.adamjulie.todo.databinding.FragmentBlankBinding
 import java.util.UUID
 
 class TaskListFragment : Fragment() {
@@ -24,8 +26,10 @@ class TaskListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_blank, container, false)
-        val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler_view)
+        val binding = ActivityMainBinding.inflate(layoutInflater)
+        //val rootView = binding.root
+        val rootView = FragmentBlankBinding.inflate(inflater, container, false).root
+        val recyclerView = rootView.findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView?.adapter = adapter
         adapter.submitList(taskList)
         val button_add = rootView.findViewById<View>(R.id.button_add)
