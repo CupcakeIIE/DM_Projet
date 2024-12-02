@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
+import java.util.UUID
 
 class TaskListFragment : Fragment() {
 
@@ -27,6 +28,16 @@ class TaskListFragment : Fragment() {
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler_view)
         adapter.currentList = taskList
         recyclerView?.adapter = adapter
+        val button_add = rootView.findViewById<View>(R.id.button_add)
+        button_add.setOnClickListener {
+            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
+            refreshAdapter()
+        }
         return rootView
+    }
+
+    private fun refreshAdapter(){
+        adapter.currentList = taskList;
+        adapter.notifyDataSetChanged();
     }
 }
