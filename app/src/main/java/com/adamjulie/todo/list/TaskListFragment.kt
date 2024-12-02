@@ -26,8 +26,8 @@ class TaskListFragment : Fragment() {
     ): View? {
         val rootView = inflater.inflate(R.layout.fragment_blank, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler_view)
-        adapter.currentList = taskList
         recyclerView?.adapter = adapter
+        adapter.submitList(taskList)
         val button_add = rootView.findViewById<View>(R.id.button_add)
         button_add.setOnClickListener {
             taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
@@ -37,7 +37,8 @@ class TaskListFragment : Fragment() {
     }
 
     private fun refreshAdapter(){
-        adapter.currentList = taskList;
-        adapter.notifyDataSetChanged();
+        adapter.submitList(taskList)
+        adapter.notifyDataSetChanged()
     }
+
 }

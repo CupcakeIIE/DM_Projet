@@ -1,16 +1,27 @@
 package com.adamjulie.todo
 
-import android.app.ActivityManager.TaskDescription
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.list.Task
 
-class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
 
-    var currentList: List<Task> = emptyList()
+object MyItemsDiffCallback : DiffUtil.ItemCallback<Task>() {
+    override fun areItemsTheSame(oldItem: Task, newItem: Task) : Boolean {
+        return oldItem.id == newItem.id// comparaison: est-ce la même "entité" ? => même id?
+    }
+
+    override fun areContentsTheSame(oldItem: Task, newItem: Task) : Boolean {
+        return (oldItem.title == newItem.title && oldItem.description == newItem.description)// comparaison: est-ce le même "contenu" ? => mêmes valeurs? (avec data class: simple égalité)
+    }
+}
+
+
+class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(MyItemsDiffCallback) {
 
     // on utilise `inner` ici afin d'avoir accès aux propriétés de l'adapter directement
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -31,9 +42,6 @@ class TaskListAdapter : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
         return TaskViewHolder(itemView)
     }
 
-    override fun getItemCount(): Int {
-        return currentList.size
-    }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(currentList[position].title, currentList[position].description)
