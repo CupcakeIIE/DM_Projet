@@ -31,7 +31,8 @@ class DetailActivity : ComponentActivity() {
                     Detail(
                         modifier = Modifier.padding(innerPadding),
                         onValidate = {
-
+                            setResult(RESULT_OK, intent)
+                            finish()
                         }
                     )
                 }
@@ -72,7 +73,8 @@ fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier) {
 @Composable
 fun DetailPreview() {
     TodoAdamJulieTheme {
-        val newTask = Task(id = UUID.randomUUID().toString(), title = "New Task !")
-        Detail()
+        Detail(
+            onValidate = {}
+        )
     }
 }
