@@ -46,4 +46,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(MyItem
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.bind(currentList[position].title, currentList[position].description)
     }
+
+    //Dans l'adapter, ajouter une propriété onClickDelete
+    var onClickDelete: (Task) -> Unit = {}
 }
