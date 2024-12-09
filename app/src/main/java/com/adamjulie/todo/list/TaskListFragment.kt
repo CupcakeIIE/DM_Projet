@@ -33,8 +33,8 @@ class TaskListFragment : Fragment() {
         adapter.submitList(taskList)
         val button_add = rootView.findViewById<View>(R.id.button_add)
         button_add.setOnClickListener {
-            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
-            refreshAdapter()
+//            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
+//            refreshAdapter()
             startActivity(intent)
         }
         //"implémentation" de la lambda dans le fragment, pour que la lambda aie un effet:
