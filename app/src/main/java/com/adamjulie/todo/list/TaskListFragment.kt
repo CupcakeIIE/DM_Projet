@@ -5,12 +5,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.detail.DetailActivity
-import java.util.UUID
 
 class TaskListFragment : Fragment() {
 
@@ -20,6 +20,11 @@ class TaskListFragment : Fragment() {
         Task(id = "id_3", title = "Task 3")
     )
     private val adapter = TaskListAdapter()
+
+
+    val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // dans cette callback on récupèrera la task et on l'ajoutera à la liste
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +40,7 @@ class TaskListFragment : Fragment() {
         button_add.setOnClickListener {
 //            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
 //            refreshAdapter()
-            startActivity(intent)
+            createTask.launch(intent)
         }
         //"implémentation" de la lambda dans le fragment, pour que la lambda aie un effet:
         adapter.onClickDelete = {
@@ -48,6 +53,7 @@ class TaskListFragment : Fragment() {
             if(taskList.isNotEmpty())
                 adapter.onClickDelete(taskList.first())
         }
+
 
         return rootView
     }
