@@ -33,17 +33,24 @@ class TaskListFragment : Fragment() {
             taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
             refreshAdapter()
         }
+        //"implémentation" de la lambda dans le fragment, pour que la lambda aie un effet:
+        adapter.onClickDelete = {
+            taskList = taskList.filter { task -> task.id != it.id }
+            refreshAdapter()
+        }
+
+        val buttonDelete = rootView.findViewById<View>(R.id.button_delete)
+        buttonDelete.setOnClickListener {
+            if(taskList.isNotEmpty())
+                adapter.onClickDelete(taskList.first())
+        }
+
         return rootView
     }
 
     private fun refreshAdapter(){
         adapter.submitList(taskList)
         adapter.notifyDataSetChanged()
-    }
-
-    //"implémentation" de la lambda dans le fragment, pour que la lambda aie un effet:
-    myAdapter.onClickDelete = { task ->
-        // Supprimer la tâche
     }
 
 }

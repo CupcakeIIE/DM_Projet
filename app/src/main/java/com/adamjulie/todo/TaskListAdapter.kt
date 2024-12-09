@@ -34,7 +34,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(MyItem
         fun bind(taskTitle: String, taskDescription: String) {
             textView.text = taskTitle
             textViewDescription.text = taskDescription
-                }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
