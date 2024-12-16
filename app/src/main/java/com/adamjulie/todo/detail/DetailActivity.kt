@@ -61,7 +61,7 @@ fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier) {
         OutlinedTextField(
             value = textTitle,
             onValueChange = { textTitle = it },
-            label = { Text("Task Detail") },
+            label = { Text("Task Title") },
             modifier = modifier,
         )
         OutlinedTextField(
