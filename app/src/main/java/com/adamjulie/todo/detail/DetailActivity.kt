@@ -1,6 +1,7 @@
 package com.adamjulie.todo.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -24,11 +25,13 @@ import com.adamjulie.todo.list.Task
 import java.util.UUID
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import com.adamjulie.todo.list.TaskListFragment.Companion.TASK_KEY
 
 //import androidx.compose.runtime.livedata.observeAsState
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        val taskEdit = intent.getSerializableExtra(TASK_KEY) as Task?
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
@@ -36,9 +39,10 @@ class DetailActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Detail(
                         modifier = Modifier.padding(innerPadding),
+                        initialTask = taskEdit,
                         onValidate = {
                             val intent = intent
-                            intent.putExtra("task", it)
+                            intent.putExtra(TASK_KEY, it)
                             setResult(RESULT_OK, intent)
                             finish()
                         }
@@ -48,13 +52,24 @@ class DetailActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
-fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier) {
-    var textDescription by remember { mutableStateOf("") }
-    var textTitle by remember { mutableStateOf("") }
+fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier, initialTask: Task? = null) {
+
+
+    var textTitle by remember { mutableStateOf(initialTask?.title ?: "") }
+
+    var textDescription by remember { mutableStateOf(initialTask?.description ?: "") }
+
+    val newTask = Task(
+        id = initialTask?.id ?: UUID.randomUUID().toString(),
+        title = textTitle,
+        description = textDescription
+    )
+
     Column(modifier = Modifier.padding(16.dp), Arrangement.spacedBy(16.dp)) {
         Text(
-            text = "Text Detail",
+            text = "Task Detail",
             style = MaterialTheme.typography.headlineLarge,
             modifier = modifier
         )
@@ -71,7 +86,6 @@ fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier) {
             modifier = modifier,
         )
         FilledTonalButton(onClick = {
-            val newTask = Task(id = UUID.randomUUID().toString(), title = textTitle, description = textDescription)
             onValidate(newTask)
         }) {
             Text("Valider")

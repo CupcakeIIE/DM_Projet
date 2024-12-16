@@ -29,6 +29,7 @@ class TaskListFragment : Fragment() {
 
         val task = result.data?.getSerializableExtra(TASK_KEY) as Task?
         if (task != null) {
+            taskList = taskList.map { if (it.id == task.id) task else it }
             refreshAdapter()
         }
 
@@ -56,14 +57,11 @@ class TaskListFragment : Fragment() {
         adapter.submitList(taskList)
         val button_edit = rootView.findViewById<View>(R.id.button_edit)
         button_edit.setOnClickListener {
-//            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
-//            refreshAdapter()
-            editTask.launch(intent)
+            if(taskList.isNotEmpty())
+                adapter.onClickEdit(taskList.last())
         }
         val button_add = rootView.findViewById<View>(R.id.button_add)
         button_add.setOnClickListener {
-//            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
-//            refreshAdapter()
             createTask.launch(intent)
         }
         //"implémentation" de la lambda dans le fragment, pour que la lambda aie un effet:
@@ -72,10 +70,14 @@ class TaskListFragment : Fragment() {
             refreshAdapter()
         }
 
+        adapter.onClickEdit = {
+            editTask.launch(intent.putExtra(TASK_KEY, it))
+        }
+
         val buttonDelete = rootView.findViewById<View>(R.id.button_delete)
         buttonDelete.setOnClickListener {
             if(taskList.isNotEmpty())
-                adapter.onClickDelete(taskList.first())
+                adapter.onClickDelete(taskList.last())
         }
 
 
