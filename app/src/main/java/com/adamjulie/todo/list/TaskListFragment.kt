@@ -44,8 +44,6 @@ class TaskListFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_blank, container, false)
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recycler_view)
         val intent = Intent(context, DetailActivity::class.java)
-        val newTask = Task(id = UUID.randomUUID().toString(), title = "New Task !")
-        intent.putExtra("task", newTask)
         recyclerView?.adapter = adapter
         adapter.submitList(taskList)
         val button_add = rootView.findViewById<View>(R.id.button_add)
