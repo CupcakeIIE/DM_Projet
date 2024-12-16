@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.detail.DetailActivity
-import java.util.UUID
 
 class TaskListFragment : Fragment() {
 
@@ -24,6 +23,15 @@ class TaskListFragment : Fragment() {
 
     companion object {
         const val TASK_KEY = "task"
+    }
+
+    val editTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+        val task = result.data?.getSerializableExtra(TASK_KEY) as Task?
+        if (task != null) {
+            refreshAdapter()
+        }
+
     }
 
     val createTask = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -46,6 +54,12 @@ class TaskListFragment : Fragment() {
         val intent = Intent(context, DetailActivity::class.java)
         recyclerView?.adapter = adapter
         adapter.submitList(taskList)
+        val button_edit = rootView.findViewById<View>(R.id.button_edit)
+        button_edit.setOnClickListener {
+//            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
+//            refreshAdapter()
+            editTask.launch(intent)
+        }
         val button_add = rootView.findViewById<View>(R.id.button_add)
         button_add.setOnClickListener {
 //            taskList = taskList + Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")

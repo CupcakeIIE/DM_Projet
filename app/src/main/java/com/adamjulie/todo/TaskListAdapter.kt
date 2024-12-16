@@ -49,4 +49,7 @@ class TaskListAdapter : ListAdapter<Task, TaskListAdapter.TaskViewHolder>(MyItem
 
     //Dans l'adapter, ajouter une propriété onClickDelete
     var onClickDelete: (Task) -> Unit = {}
+
+
+    var onClickEdit: (Task) -> Unit = {}
 }
