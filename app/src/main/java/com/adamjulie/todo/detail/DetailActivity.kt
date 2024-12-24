@@ -59,11 +59,13 @@ class DetailActivity : ComponentActivity() {
                     Detail(
                         modifier = Modifier.padding(innerPadding),
                         initialTask = taskEdit,
-                        onValidate = {
-                            val intent = intent
-                            intent.putExtra(TASK_KEY, it)
-                            setResult(RESULT_OK, intent)
-                            finish()
+                        onValidate =  { updatedTask ->
+                            // Lorsque l'utilisateur valide, on renvoie la tâche mise à jour
+                            val resultIntent = Intent().apply {
+                                putExtra(TASK_KEY, updatedTask)
+                            }
+                            setResult(RESULT_OK, resultIntent)
+                            finish() // Ferme l'activité et retourne la tâche à l'activité précédente
                         }
                     )
                 }
