@@ -10,16 +10,23 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
+import com.adamjulie.todo.TaskListListener
 import com.adamjulie.todo.detail.DetailActivity
 
 class TaskListFragment : Fragment() {
+
+    val adapterListener : TaskListListener = object : TaskListListener {
+        override fun onClickDelete(task: Task) = Unit
+        override fun onClickEdit(task: Task) = Unit
+    }
+    val adapter = TaskListAdapter(adapterListener)
 
     private var taskList = listOf(
         Task(id = "id_1", title = "Task 1", description = "description 1"),
         Task(id = "id_2", title = "Task 2"),
         Task(id = "id_3", title = "Task 3")
     )
-    private val adapter = TaskListAdapter()
+    //private val adapter = TaskListAdapter()
 
     companion object {
         const val TASK_KEY = "task"
