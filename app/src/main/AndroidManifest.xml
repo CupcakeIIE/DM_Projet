@@ -18,7 +18,9 @@
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.TodoAdamJulie" >
         <intent-filter>
-            <data android:mimeType="text/*" />
+            <action android:name="android.intent.action.SEND" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data android:mimeType="text/plain" />
         </intent-filter>
         </activity>
         <activity
