@@ -1,5 +1,6 @@
 package com.adamjulie.todo.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,9 +31,27 @@ import java.util.UUID
 
 class DetailActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-        val taskEdit = intent.getSerializableExtra(TASK_KEY) as Task?
-            ?: intent.getSerializableExtra(TASK_KEY) as? Task
+        //val taskEdit = intent.getSerializableExtra(TASK_KEY) as Task?
+          // ?: intent.getSerializableExtra(TASK_KEY) as? Task
         super.onCreate(savedInstanceState)
+
+
+        // Vérification pour récupérer un texte partagé
+        val sharedText = if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
+            intent.getStringExtra(Intent.EXTRA_TEXT)
+        } else null
+
+        // Récupérer la tâche existante ou créer une nouvelle tâche avec description pré-remplie
+        val taskEdit = (intent.getSerializableExtra(TASK_KEY) as? Task)?.let { task ->
+            // Si la tâche existe, on utilise la description de la tâche, sinon on utilise le texte partagé
+            task.copy(description = sharedText ?: task.description)
+        } ?: Task(
+            id = UUID.randomUUID().toString(),
+            title = "",
+            description = sharedText ?: ""
+        )
+
+
         enableEdgeToEdge()
         setContent {
             TodoAdamJulieTheme {
