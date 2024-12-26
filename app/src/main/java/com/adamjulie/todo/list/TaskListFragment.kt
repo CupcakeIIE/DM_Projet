@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.TaskListListener
 import com.adamjulie.todo.data.Api
+import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
 
@@ -31,6 +33,9 @@ class TaskListFragment : Fragment() {
         Task(id = "id_3", title = "Task 3")
     )
     //private val adapter = TaskListAdapter()
+
+    private lateinit var userTextView: TextView
+    private val viewModel: TaskListViewModel by viewModels()
 
 
     companion object {
@@ -92,6 +97,16 @@ class TaskListFragment : Fragment() {
                 adapter.onClickDelete(taskList.last())
         }
 
+        // Initialiser la TextView
+        userTextView = rootView.findViewById(R.id.userTextView)
+
+
+        lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
+            viewModel.tasksStateFlow.collect { newList ->
+                // cette lambda est exécutée à chaque fois que la liste est mise à jour dans le VM
+                // -> ici, on met à jour la liste dans l'adapter
+            }
+        }
 
         return rootView
     }
@@ -101,6 +116,17 @@ class TaskListFragment : Fragment() {
         adapter.notifyDataSetChanged()
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        // Lancer une coroutine dans le contexte de lifecycleScope
+        lifecycleScope.launch {
+            val user = Api.userWebService.fetchUser().body()!!
+            userTextView.text = user.name
+        }
+        viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
+
+    }
 
 
 }
