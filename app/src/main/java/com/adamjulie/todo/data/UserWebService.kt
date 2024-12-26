@@ -7,3 +7,4 @@ interface UserWebService {
     @GET("/sync/v9/user/")
     suspend fun fetchUser(): Response<User>
 }
+

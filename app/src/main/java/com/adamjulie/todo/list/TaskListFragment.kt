@@ -5,13 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.TaskListListener
+import com.adamjulie.todo.data.Api
 import com.adamjulie.todo.detail.DetailActivity
+import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
 
@@ -27,6 +31,7 @@ class TaskListFragment : Fragment() {
         Task(id = "id_3", title = "Task 3")
     )
     //private val adapter = TaskListAdapter()
+
 
     companion object {
         const val TASK_KEY = "task"
@@ -95,5 +100,7 @@ class TaskListFragment : Fragment() {
         adapter.submitList(taskList)
         adapter.notifyDataSetChanged()
     }
+
+
 
 }

@@ -11,3 +11,4 @@ data class User(
     val name: String,
     @SerialName("avatar_medium")
     val avatar: String? = null)
+
