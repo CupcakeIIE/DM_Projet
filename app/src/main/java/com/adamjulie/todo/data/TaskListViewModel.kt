@@ -24,6 +24,52 @@ class TaskListViewModel : ViewModel() {
         }
     }
 
+    fun update(task: Task) {
+        viewModelScope.launch {
+            val response = webService.update(task = task, id = task.id)
+            if (!response.isSuccessful) {
+                Log.e("Network", "Error: ${response.raw()}")
+                return@launch
+            }
+
+            val updatedTask = response.body()!!
+            val updatedList = tasksStateFlow.value.map {
+                if (it.id == updatedTask.id) updatedTask else it
+            }
+            tasksStateFlow.value = updatedList
+        }
+    }
+
+
+
+    fun create(task: Task) {
+        viewModelScope.launch {
+            val response = webService.create(task = task)
+            if (!response.isSuccessful) {
+                Log.e("Network", "Error: ${response.raw()}")
+                return@launch
+            }
+
+            val createdTask = response.body()!!
+            val createdList = tasksStateFlow.value.map {
+                if (it.id == createdTask.id) createdTask else it
+            }
+            tasksStateFlow.value = createdList
+        }
+    }
+
+
+
+    fun delete(task: Task) {
+        viewModelScope.launch {
+            val response = webService.delete(id = task.id)
+            if (!response.isSuccessful) {
+                Log.e("Network", "Error: ${response.raw()}")
+                return@launch
+            }
+        }
+    }
+
     // à compléter plus tard:
     fun add(task: Task) {}
     fun edit(task: Task) {}
