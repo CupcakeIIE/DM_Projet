@@ -3,8 +3,10 @@ package com.adamjulie.todo.user
 import android.os.Bundle
 import android.widget.Button
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,6 +42,11 @@ class UserActivity : ComponentActivity() {
 fun UserUI() {
     var bitmap: Bitmap? by remember { mutableStateOf(null) }
     var uri: Uri? by remember { mutableStateOf(null) }
+
+    // Initialisation du launcher pour prendre une photo avec TakePicturePreview
+    val takePicture = rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) {
+        bitmap = it
+    }
 
     Column {
         AsyncImage(
