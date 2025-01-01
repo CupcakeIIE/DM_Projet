@@ -1,6 +1,7 @@
 package com.adamjulie.todo.user
 
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -20,12 +21,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.tooling.preview.Preview
 import coil3.Bitmap
 import coil3.Uri
 import coil3.compose.AsyncImage
 import com.adamjulie.todo.user.ui.theme.TodoAdamJulieTheme
+import okhttp3.MultipartBody
 
 class UserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +50,7 @@ fun UserUI() {
     val takePicture = rememberLauncherForActivityResult(ActivityResultContracts.TakePicturePreview()) {
         bitmap = it
     }
+
 
     Column {
         AsyncImage(
