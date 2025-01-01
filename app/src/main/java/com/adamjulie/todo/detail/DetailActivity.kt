@@ -5,6 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,11 +22,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.adamjulie.todo.R
 import com.adamjulie.todo.detail.ui.theme.TodoAdamJulieTheme
 import com.adamjulie.todo.list.Task
 import com.adamjulie.todo.list.TaskListFragment.Companion.TASK_KEY
+import com.adamjulie.todo.user.UserActivity
 import java.util.UUID
 
 //import androidx.compose.runtime.livedata.observeAsState
@@ -118,6 +124,17 @@ fun Detail(onValidate: (Task) -> Unit, modifier: Modifier = Modifier, initialTas
         }) {
             Text("Valider")
         }
+        val context = LocalContext.current
+
+        Image(
+            painter = painterResource(id = R.drawable.baseline_add_24), // Remplacez par votre image
+            contentDescription = "Image",
+            modifier = Modifier
+                .clickable {
+                    val intent = Intent(context, UserActivity::class.java)
+                    context.startActivity(intent)
+                }
+        )
 
     }
 
