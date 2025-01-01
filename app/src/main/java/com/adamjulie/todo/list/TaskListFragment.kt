@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.adamjulie.todo.data.Api
 import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
+import coil.load
 
 class TaskListFragment : Fragment() {
 
@@ -35,6 +37,7 @@ class TaskListFragment : Fragment() {
     //private val adapter = TaskListAdapter()
 
     private lateinit var userTextView: TextView
+    private lateinit var userImageView: ImageView
     private val viewModel: TaskListViewModel by viewModels()
 
 
@@ -100,6 +103,8 @@ class TaskListFragment : Fragment() {
         // Initialiser la TextView
         userTextView = rootView.findViewById(R.id.userTextView)
 
+        userImageView = rootView.findViewById(R.id.imageView)
+
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             viewModel.tasksStateFlow.collect { newList ->
@@ -124,8 +129,10 @@ class TaskListFragment : Fragment() {
             val user = Api.userWebService.fetchUser().body()!!
             userTextView.text = user.name
         }
-        viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
 
+        userImageView.load("https://goo.gl/gEgYUd")
+
+        viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
     }
 
 
