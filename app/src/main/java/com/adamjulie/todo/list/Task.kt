@@ -10,7 +10,7 @@ val title: String,
 @SerialName("description")
 val description: String,
 @SerialName("id")
-val id: String? = null)
+val id: String = "")
 {
 
 
