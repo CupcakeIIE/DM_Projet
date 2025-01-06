@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 class TaskListViewModel : ViewModel() {
-    private val webService = Api.TaskWebService
+    private val webService = Api.taskWebService
 
     public val tasksStateFlow = MutableStateFlow<List<Task>>(emptyList())
 

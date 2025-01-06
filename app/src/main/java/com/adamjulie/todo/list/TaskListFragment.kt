@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.TaskListListener
@@ -19,7 +20,6 @@ import com.adamjulie.todo.data.Api
 import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
-import coil.load
 
 class TaskListFragment : Fragment() {
 
@@ -110,6 +110,8 @@ class TaskListFragment : Fragment() {
             viewModel.tasksStateFlow.collect { newList ->
                 // cette lambda est exécutée à chaque fois que la liste est mise à jour dans le VM
                 // -> ici, on met à jour la liste dans l'adapter
+                taskList = newList;
+                refreshAdapter();
             }
         }
 
@@ -132,7 +134,7 @@ class TaskListFragment : Fragment() {
 
         userImageView.load("https://goo.gl/gEgYUd")
 
-        viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
+       // viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
     }
 
 

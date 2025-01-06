@@ -8,7 +8,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 
 object Api {
-    private const val TOKEN = "COPIEZ_VOTRE_CLE_API_ICI"
+    private const val TOKEN = "3a8f3ee2212fb8f139f11928a50190f514358547"
 
     private val retrofit by lazy {
         // client HTTP
@@ -41,7 +41,7 @@ object Api {
     val userWebService : UserWebService by lazy {
         retrofit.create(UserWebService::class.java)
     }
-    val TaskWebService : TaskWebService by lazy {
+    val taskWebService : TaskWebService by lazy {
         retrofit.create(TaskWebService::class.java)
     }
 
