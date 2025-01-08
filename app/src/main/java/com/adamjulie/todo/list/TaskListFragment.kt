@@ -20,6 +20,7 @@ import com.adamjulie.todo.data.Api
 import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
+import coil3.request.error
 
 class TaskListFragment : Fragment() {
 
@@ -130,9 +131,14 @@ class TaskListFragment : Fragment() {
         lifecycleScope.launch {
             val user = Api.userWebService.fetchUser().body()!!
             userTextView.text = user.name
+
+            userImageView.load(user.avatar) {
+                error(R.drawable.ic_launcher_background) // image par défaut en cas d'erreur
+            }
         }
 
-        userImageView.load("https://goo.gl/gEgYUd")
+
+        //userImageView.load("https://goo.gl/gEgYUd")
 
        // viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
     }
