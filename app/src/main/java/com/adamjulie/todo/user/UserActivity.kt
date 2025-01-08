@@ -1,8 +1,6 @@
 package com.adamjulie.todo.user
 
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -10,10 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,14 +16,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.semantics.Role.Companion.Button
-import androidx.compose.ui.tooling.preview.Preview
 import coil3.Bitmap
 import coil3.Uri
 import coil3.compose.AsyncImage
-import com.adamjulie.todo.user.ui.theme.TodoAdamJulieTheme
-import okhttp3.MultipartBody
 
 class UserActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +28,19 @@ class UserActivity : ComponentActivity() {
                 UserUI()
         }
     }
+
+
+//    private fun Uri.toRequestBody(): MultipartBody.Part {
+//        val fileInputStream = contentResolver.openInputStream(this)!!
+//        val fileBody = fileInputStream.readBytes().toRequestBody()
+//        return MultipartBody.Part.createFormData(
+//            name = "avatar",
+//            filename = "avatar.jpg",
+//            body = fileBody
+//        )
+//    }
 }
+
 
 
 @Composable
@@ -71,4 +73,8 @@ fun UserUI() {
             Text("Pick photo")
         }
     }
+
+
+
 }
+
