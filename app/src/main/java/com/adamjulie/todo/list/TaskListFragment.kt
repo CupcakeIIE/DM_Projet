@@ -20,7 +20,6 @@ import com.adamjulie.todo.data.Api
 import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
-import coil3.request.error
 
 class TaskListFragment : Fragment() {
 
@@ -39,6 +38,8 @@ class TaskListFragment : Fragment() {
 
     private lateinit var userTextView: TextView
     private lateinit var userImageView: ImageView
+    private lateinit var requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<String>
+
     private val viewModel: TaskListViewModel by viewModels()
 
 
@@ -106,6 +107,7 @@ class TaskListFragment : Fragment() {
 
         userImageView = rootView.findViewById(R.id.imageView)
 
+        
 
         lifecycleScope.launch { // on lance une coroutine car `collect` est `suspend`
             viewModel.tasksStateFlow.collect { newList ->
