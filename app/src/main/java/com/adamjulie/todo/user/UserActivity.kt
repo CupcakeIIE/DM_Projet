@@ -6,6 +6,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.material3.Button
@@ -43,6 +44,11 @@ fun UserUI() {
         bitmap = it
     }
 
+    // Initialisation du launcher pour choisir une photo dans la galerie
+//    val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
+//        uri = it // selectedUri est un Uri ou null
+//    }
+
 
     Column {
         AsyncImage(
@@ -52,13 +58,13 @@ fun UserUI() {
         )
 
         Button(onClick = {
-            // Action pour prendre une photo (implémentation à faire)
+            takePicture.launch()
         }) {
             Text("Take picture")
         }
 
         Button(onClick = {
-            // Action pour choisir une photo (implémentation à faire)
+           // pickPhoto.launch("image/*")
         }) {
             Text("Pick photo")
         }
