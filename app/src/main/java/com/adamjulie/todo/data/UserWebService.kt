@@ -1,6 +1,8 @@
 package com.adamjulie.todo.data
 
+import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Response
@@ -31,6 +33,16 @@ interface UserWebService {
             name = "avatar",
             filename = "avatar.jpg",
             body = tmpFile.readBytes().toRequestBody()
+        )
+    }
+
+    private fun Uri.toRequestBody(context: Context): MultipartBody.Part {
+        val fileInputStream = context.contentResolver.openInputStream(this)!!
+        val fileBody = fileInputStream.readBytes().toRequestBody()
+        return MultipartBody.Part.createFormData(
+            name = "avatar",
+            filename = "avatar.jpg",
+            body = fileBody
         )
     }
 }

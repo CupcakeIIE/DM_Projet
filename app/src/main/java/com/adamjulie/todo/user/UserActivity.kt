@@ -29,16 +29,6 @@ class UserActivity : ComponentActivity() {
         }
     }
 
-//
-//    private fun Uri.toRequestBody(): MultipartBody.Part {
-//        val fileInputStream = contentResolver.openInputStream(this)!!
-//        val fileBody = fileInputStream.readBytes().toRequestBody()
-//        return MultipartBody.Part.createFormData(
-//            name = "avatar",
-//            filename = "avatar.jpg",
-//            body = fileBody
-//        )
-//    }
 }
 
 
