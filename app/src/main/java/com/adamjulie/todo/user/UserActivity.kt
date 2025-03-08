@@ -7,6 +7,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -91,6 +92,19 @@ class UserActivity : ComponentActivity() {
                 }
             }
 
+
+        val pickMedia =  rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { newUri ->
+            if (newUri != null) {
+                uri = coil3.Uri(newUri.toString())
+                composeScope.launch {
+                    val avatarPart = newUri.toRequestBody()
+                    userWebService.updateAvatar(avatarPart)
+                }
+            } else {
+                return@rememberLauncherForActivityResult
+            }
+        }
+
         // Initialisation du launcher pour choisir une photo dans la galerie
 //    val pickPhoto = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) {
 //        uri = it // selectedUri est un Uri ou null
@@ -111,11 +125,12 @@ class UserActivity : ComponentActivity() {
                 content = { Text("Take picture") }
             )
 
-            Button(onClick = {
-                // pickPhoto.launch("image/*")
-            }) {
-                Text("Pick photo")
-            }
+            Button(
+                onClick = {
+                    pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+                },
+                content = { Text("Pick photo") }
+            )
         }
 
 
