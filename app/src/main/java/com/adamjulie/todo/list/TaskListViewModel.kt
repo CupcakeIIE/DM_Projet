@@ -1,9 +1,12 @@
-package com.adamjulie.todo.data
+package com.adamjulie.todo.list
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.adamjulie.todo.list.Task
+import com.adamjulie.todo.data.Api
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -76,5 +79,14 @@ class TaskListViewModel : ViewModel() {
         return tasksStateFlow.value.first()
     }
 
+
+    fun onLongClickShare(context: Context, task: Task) {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Task: ${task.title}")
+            putExtra(Intent.EXTRA_TEXT, "Title: ${task.title} \n Description: ${task.description.orEmpty()}")
+        }
+        context.startActivity(Intent.createChooser(shareIntent, "Share Task"))
+    }
 
 }

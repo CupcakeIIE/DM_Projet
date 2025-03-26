@@ -26,7 +26,7 @@ interface UserWebService {
 
 
 }
-
+/*
 data class UserUpdate(
     val commands: List<Command>
 )
@@ -39,5 +39,5 @@ data class Command(
 data class UserUpdateArgs(
     val userId: String,
     val newName: String
-)
+)*/
 

@@ -17,7 +17,6 @@ import com.adamjulie.todo.R
 import com.adamjulie.todo.TaskListAdapter
 import com.adamjulie.todo.TaskListListener
 import com.adamjulie.todo.data.Api
-import com.adamjulie.todo.data.TaskListViewModel
 import com.adamjulie.todo.detail.DetailActivity
 import kotlinx.coroutines.launch
 
@@ -85,6 +84,16 @@ class TaskListFragment : Fragment() {
 
         }
 
+        val buttonShare = rootView.findViewById<View>(R.id.button_share)
+        buttonShare.setOnClickListener {
+            val task = viewModel.getLastTask()
+            if (task != null && isAdded) {  // Vérifie que le fragment est attaché
+                context?.let { ctx ->
+                    viewModel.onLongClickShare(ctx, task)
+                }
+            }
+        }
+
         // Initialiser la TextView
         userTextView = rootView.findViewById(R.id.userTextView)
 
@@ -126,6 +135,7 @@ class TaskListFragment : Fragment() {
 
        viewModel.refresh() // on demande de rafraîchir les données sans attendre le retour directement
     }
+
 
 
 }
